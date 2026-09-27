@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2b1055">
+  <meta name="description" content="Héroes de las Tablas: un juego musical para aprender las tablas de multiplicar del 1 al 10.">
+  <title>Héroes de las Tablas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Fondo animado -->
+  <div id="sky" aria-hidden="true">
+    <div class="twinkle t1"></div>
+    <div class="twinkle t2"></div>
+    <div class="twinkle t3"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+    <div class="cloud c3"></div>
+  </div>
+  <canvas id="confetti" aria-hidden="true"></canvas>
+
+  <main id="app">
+    <section id="screen-home" class="screen"></section>
+    <section id="screen-map" class="screen"></section>
+    <section id="screen-study" class="screen"></section>
+    <section id="screen-game" class="screen"></section>
+    <section id="screen-results" class="screen"></section>
+    <section id="screen-treasure" class="screen"></section>
+  </main>
+
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+    <div class="modal-card" id="modal-card"></div>
+  </div>
+  <div id="toasts" aria-live="polite"></div>
+
+  <script src="js/sound.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>
