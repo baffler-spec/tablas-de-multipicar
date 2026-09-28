@@ -17,6 +17,7 @@ const Sound = (() => {
 
   let running = false;
   let intensity = 0;
+  let boost = 0; // BPM extra (Nivel 2)
   let step = 0;
   let nextTime = 0;
   let timer = null;
@@ -41,6 +42,7 @@ const Sound = (() => {
   ];
   const BASS_STEPS = [0, 3, 6, 8, 10, 11, 14];
   const TEMPOS = [96, 108, 116, 126];
+  const tempo = () => TEMPOS[intensity] + boost;
 
   const mtof = (m) => 440 * Math.pow(2, (m - 69) / 12);
 
@@ -149,7 +151,7 @@ const Sound = (() => {
     const bar = Math.floor(s / 16);
     const st = s % 16;
     const ch = PROG[bar % 4];
-    const sixteenth = 60 / TEMPOS[intensity] / 4;
+    const sixteenth = 60 / tempo() / 4;
 
     if (intensity === 0) {
       // Ambiente tranquilo para menús
@@ -196,7 +198,7 @@ const Sound = (() => {
   function tick() {
     while (nextTime < ctx.currentTime + LOOKAHEAD) {
       scheduleStep(step, nextTime);
-      nextTime += 60 / TEMPOS[intensity] / 4;
+      nextTime += 60 / tempo() / 4;
       step++;
     }
   }
@@ -211,6 +213,10 @@ const Sound = (() => {
 
   function setIntensity(level) {
     intensity = Math.max(0, Math.min(3, level));
+  }
+
+  function setBoost(bpm) {
+    boost = bpm;
   }
 
   // ---------- Efectos ----------
@@ -282,6 +288,24 @@ const Sound = (() => {
         [67, 65, 64, 60].forEach((n, i) => tone(mtof(n), t + i * 0.22, 0.3, { type: 'triangle', vol: 0.15, bus: sfxBus }));
       });
     },
+    attack() {
+      sfx((t) => {
+        tone(90, t, 0.5, { type: 'sawtooth', vol: 0.18, bus: sfxBus, slideTo: 45, cutoff: 800 });
+        noise(t, 0.3, 0.4, 400, 'lowpass', sfxBus);
+        [76, 75, 74].forEach((n, i) => tone(mtof(n), t + 0.1 + i * 0.1, 0.12, { type: 'square', vol: 0.05, bus: sfxBus }));
+      });
+    },
+    fanfare() {
+      sfx((t) => {
+        const seq = [[67, 0, 0.15], [72, 0.15, 0.15], [76, 0.3, 0.15], [79, 0.45, 0.4], [76, 0.85, 0.15], [79, 1.0, 0.7]];
+        seq.forEach(([n, d, len]) => {
+          tone(mtof(n), t + d, len, { type: 'square', vol: 0.08, bus: sfxBus, cutoff: 3200 });
+          tone(mtof(n - 12), t + d, len, { type: 'triangle', vol: 0.12, bus: sfxBus });
+        });
+        [72, 76, 79, 84, 88].forEach((n) => tone(mtof(n), t + 1.7, 2.2, { type: 'triangle', vol: 0.09, bus: sfxBus, attack: 0.05 }));
+        [0, 0.35, 0.7, 1.05, 1.4].forEach((d) => noise(t + 1.7 + d, 0.25, 0.5, 5000, 'highpass', sfxBus));
+      });
+    },
     star(i = 0) {
       sfx((t) => tone(mtof(84 + i * 4), t, 0.35, { type: 'triangle', vol: 0.18, bus: sfxBus }));
     },
@@ -334,6 +358,7 @@ const Sound = (() => {
     init,
     start,
     setIntensity,
+    setBoost,
     get intensity() {
       return intensity;
     },

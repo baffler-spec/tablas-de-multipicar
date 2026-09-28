@@ -493,3 +493,168 @@ body.fire .fire-banner { display: block; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
 }
+
+/* ===================== Nivel 2 · Modo Leyenda ===================== */
+body.lvl2::before { background: linear-gradient(170deg, #1a0633 0%, #5c0f3f 55%, #c0392b 100%); }
+body.lvl2.fire::before { background: linear-gradient(170deg, #3a0c3f, #b8323e 55%, #ff9f43); }
+.small { font-size: 14px; opacity: 0.8; }
+
+.level-switch { display: flex; gap: 6px; background: rgba(0, 0, 0, 0.25); padding: 5px; border-radius: 18px; max-width: 460px; margin: 4px auto 0; }
+.level-switch button { flex: 1; padding: 10px 6px; border-radius: 14px; font-size: 16px; font-weight: 700; background: none; }
+.level-switch button.active { background: #fff; color: var(--ink); box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2); }
+body.lvl2 .level-switch button.active { background: linear-gradient(180deg, #ffb199, #ff5e57); color: #fff; }
+.level-switch button.locked { opacity: 0.55; }
+.map-note { text-align: center; font-size: 14px; font-weight: 600; margin: -6px 0 8px; opacity: 0.9; }
+
+.mega { filter: hue-rotate(150deg) saturate(1.6) drop-shadow(0 0 10px rgba(255, 60, 60, 0.8)); }
+body.lvl2 .node:not(.locked) .node-monster { filter: hue-rotate(150deg) saturate(1.6); }
+body.lvl2 .node.w-boss .node-monster { filter: drop-shadow(0 0 8px gold); }
+
+.legend-box {
+  margin: 12px 0 0; padding: 12px 16px; border-radius: var(--radius); text-align: left;
+  background: linear-gradient(135deg, rgba(255, 94, 87, 0.35), rgba(255, 159, 67, 0.25));
+  border: 2px solid rgba(255, 200, 120, 0.6);
+}
+.legend-box h3 { margin: 0 0 6px; }
+.legend-box ul { margin: 0; padding-left: 4px; list-style: none; }
+.legend-box li { margin: 4px 0; }
+
+.question-card.attack { border-color: #ff5e57; animation: attackShake 0.5s; }
+@keyframes attackShake { 20% { transform: translateX(-10px) rotate(-1deg); } 40% { transform: translateX(10px) rotate(1deg); } 60% { transform: translateX(-6px); } 80% { transform: translateX(6px); } }
+.attack-banner {
+  margin: -6px -6px 8px; padding: 6px 10px; border-radius: 12px; font-weight: 700; font-size: 16px; color: #fff;
+  background: repeating-linear-gradient(135deg, #ff5e57 0 14px, #e84118 14px 28px);
+  animation: blink 0.6s 3;
+}
+.monster-emoji.attacking { animation: attacking 0.6s; }
+@keyframes attacking { 30% { transform: translateX(-40px) scale(1.25) rotate(-12deg); } 60% { transform: translateX(-20px) scale(1.1); } }
+.q-small { font-size: 0.45em; display: block; line-height: 1.2; }
+.q-small + br { display: none; }
+.answer.expr { font-size: clamp(26px, 7.5vw, 38px); }
+
+/* ---------- Personalización: auras, mascotas y títulos ---------- */
+.aura-fx { position: absolute; left: 50%; top: 50%; width: 1.5em; height: 1.5em; transform: translate(-50%, -50%); border-radius: 50%; pointer-events: none; z-index: -1; font-size: 64px; }
+.avatar { isolation: isolate; }
+.avatar.sm .aura-fx { font-size: 30px; }
+.avatar.lg .aura-fx { font-size: 76px; }
+.avatar.xl .aura-fx { font-size: 120px; }
+.aura-none .aura-fx { display: none; }
+.aura-sparkle .aura-fx, .aura-chip.aura-sparkle {
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.9) 0 4%, transparent 5%) 0 0 / 30% 30%, radial-gradient(circle, rgba(255, 236, 150, 0.6), transparent 70%);
+  animation: spin 6s linear infinite;
+}
+.aura-bubbles .aura-fx, .aura-chip.aura-bubbles {
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.7) 0 6%, transparent 7%) 0 0 / 40% 40%, radial-gradient(circle, rgba(72, 219, 251, 0.6), transparent 70%);
+  animation: spin 9s linear infinite reverse;
+}
+.aura-rainbow .aura-fx, .aura-chip.aura-rainbow {
+  background: conic-gradient(#ff6b6b, #feca57, #1dd1a1, #48dbfb, #a55eea, #ff9ff3, #ff6b6b);
+  -webkit-mask: radial-gradient(circle, transparent 38%, #000 40%, #000 60%, transparent 70%);
+  mask: radial-gradient(circle, transparent 38%, #000 40%, #000 60%, transparent 70%);
+  animation: spin 3s linear infinite;
+}
+.aura-fire .aura-fx, .aura-chip.aura-fire {
+  background: radial-gradient(circle, rgba(255, 220, 80, 0.9) 20%, rgba(255, 94, 87, 0.7) 45%, transparent 70%);
+  animation: flicker 0.25s ease-in-out infinite alternate;
+}
+.aura-gold .aura-fx, .aura-chip.aura-gold {
+  background: conic-gradient(from 0deg, transparent 0 10%, rgba(255, 215, 0, 0.9) 12%, transparent 14% 35%, rgba(255, 215, 0, 0.9) 37%, transparent 39% 60%, rgba(255, 215, 0, 0.9) 62%, transparent 64% 85%, rgba(255, 215, 0, 0.9) 87%, transparent 89%),
+    radial-gradient(circle, rgba(255, 223, 90, 0.95) 25%, rgba(255, 180, 0, 0.4) 50%, transparent 70%);
+  animation: spin 5s linear infinite;
+}
+@keyframes spin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+@keyframes flicker { to { transform: translate(-50%, -50%) scale(1.12); opacity: 0.8; } }
+.aura-chip { display: inline-block; width: 50px; height: 50px; border-radius: 50%; vertical-align: middle; position: relative; background-color: rgba(0, 0, 0, 0.08); }
+.aura-chip.aura-none { border: 3px dashed #ccc; background: none; }
+.aura-chip { animation-name: chipSpin !important; }
+.aura-chip.aura-fire { animation-name: chipFlicker !important; }
+@keyframes chipSpin { to { transform: rotate(360deg); } }
+@keyframes chipFlicker { to { transform: scale(1.12); } }
+
+.avatar-pet { position: absolute; right: -0.55em; bottom: -0.05em; font-size: 0.45em; animation: bob 1.4s ease-in-out infinite; }
+.avatar .avatar-pet { font-size: 30px; }
+.avatar.sm .avatar-pet { font-size: 14px; }
+.avatar.lg .avatar-pet { font-size: 36px; right: -30px; }
+.avatar.xl .avatar-pet { font-size: 54px; right: -46px; }
+
+.title-badge {
+  display: inline-block; margin: 2px 0 4px; padding: 6px 16px; border-radius: 999px; font-weight: 700; font-size: 17px;
+  background: linear-gradient(90deg, #ffe066, #ffb703); color: #5a2d00; box-shadow: 0 4px 0 rgba(0, 0, 0, 0.2);
+}
+.title-badge.t2 { background: linear-gradient(90deg, #fff1a8, #ffd700, #ffb700, #ffd700); background-size: 200% 100%; animation: fireSlide 2s linear infinite; }
+.treasure-hero .title-badge { display: table; margin: 8px auto 0; }
+.card.special { border-style: dashed; border-color: #ffc94d; }
+.card.special.selected { border-style: solid; }
+.card .card-price { text-align: center; }
+.album-title { margin: 16px 0 8px; font-size: 18px; }
+
+/* ---------- Finales ---------- */
+.finale { position: relative; text-align: center; min-height: 80vh; padding-top: 10px; overflow-x: clip; }
+.finale-story { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 75vh; gap: 10px; }
+.finale-dragon { font-size: 130px; line-height: 1; animation: dragonAngry 0.8s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(255, 80, 80, 0.8)); transition: filter 1s; }
+.finale-2 .finale-dragon { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.9)); }
+@keyframes dragonAngry { 50% { transform: translateY(-10px) rotate(-5deg); } }
+.finale-dragon.friendly { animation: dragonHappy 1.2s ease-in-out infinite; filter: drop-shadow(0 0 30px rgba(255, 159, 243, 0.9)); }
+.finale-dragon.friendly::after { content: '💖'; position: absolute; font-size: 40px; margin-left: -10px; animation: floatUp 1.2s infinite; }
+@keyframes dragonHappy { 0%, 100% { transform: scale(1) rotate(0); } 25% { transform: scale(1.1) rotate(8deg); } 75% { transform: scale(1.1) rotate(-8deg); } }
+.story-line { font-size: clamp(20px, 5.5vw, 28px); font-weight: 600; max-width: 520px; margin: 0; opacity: 0; transform: translateY(20px); transition: 0.8s; text-shadow: 0 3px 0 rgba(0, 0, 0, 0.3); }
+.story-line.show { opacity: 1; transform: none; }
+.skip-btn { position: fixed; right: 16px; bottom: 16px; z-index: 20; padding: 10px 16px; border-radius: 14px; background: rgba(255, 255, 255, 0.2); font-size: 16px; font-weight: 600; }
+
+.finale-reveal { position: relative; animation: pop 0.6s; }
+.finale-rays {
+  position: absolute; left: 50%; top: 170px; width: 700px; height: 700px; margin: -350px 0 0 -350px; z-index: -1; pointer-events: none;
+  background: repeating-conic-gradient(rgba(255, 230, 120, 0.22) 0 10deg, transparent 10deg 20deg);
+  -webkit-mask: radial-gradient(circle, #000 20%, transparent 65%); mask: radial-gradient(circle, #000 20%, transparent 65%);
+  animation: rays 20s linear infinite;
+}
+@keyframes rays { to { transform: rotate(360deg); } }
+.finale-trophy { font-size: 90px; line-height: 1; animation: trophy 1.5s ease-in-out infinite; filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9)); }
+@keyframes trophy { 50% { transform: translateY(-10px) scale(1.08) rotate(-4deg); } }
+.finale-headline {
+  font-size: clamp(40px, 11vw, 64px); margin: 8px 0; color: var(--yellow);
+  text-shadow: 0 5px 0 rgba(0, 0, 0, 0.3), 0 0 30px rgba(255, 215, 0, 0.7); animation: pop 0.6s, letter 2s 0.6s ease-in-out infinite;
+}
+.finale-hero { position: relative; display: inline-block; margin: 20px 40px 0; }
+.finale-hero .avatar { animation: bob 1s ease-in-out infinite; }
+.finale-friend { position: absolute; left: -70px; bottom: 0; font-size: 64px; animation: bob 1.3s ease-in-out infinite reverse; }
+.finale-title {
+  display: inline-block; font-size: clamp(22px, 6vw, 32px); font-weight: 700; margin: 16px 0; padding: 10px 24px; border-radius: 18px;
+  background: linear-gradient(90deg, #ffe066, #ffb703); color: #5a2d00; box-shadow: var(--shadow);
+}
+.finale-2 .finale-title { background: linear-gradient(90deg, #fff1a8, #ffd700, #ffb700, #ffd700, #fff1a8); background-size: 200% 100%; animation: fireSlide 2s linear infinite; }
+.finale .unlocks { margin-top: 10px; }
+.complete-box { background: rgba(0, 0, 0, 0.25); border-radius: var(--radius); padding: 14px; margin: 6px 0 14px; }
+.complete-pct { font-size: 64px; font-weight: 700; color: #7bed9f; text-shadow: 0 0 20px rgba(123, 237, 159, 0.6); line-height: 1; }
+
+/* ---------- Diploma ---------- */
+.modal-card.wide { max-width: 560px; max-height: 94vh; overflow: auto; }
+.name-field { display: block; font-weight: 600; margin-bottom: 12px; }
+.name-field input {
+  display: block; width: 100%; margin-top: 6px; padding: 12px 14px; border-radius: 14px; border: 3px solid #e0d4ff;
+  font: inherit; font-size: 20px; color: var(--ink); background: #fff;
+}
+.name-field input:focus { outline: none; border-color: var(--purple); }
+.diploma {
+  position: relative; text-align: center; color: #4a2c00; padding: 22px 20px 16px; border-radius: 18px;
+  background: radial-gradient(circle at 50% 0%, #fffdf2, #fff3cf);
+  border: 8px double #e0a526; box-shadow: inset 0 0 0 4px #fff3cf, inset 0 0 0 6px #f3c65a;
+}
+.diploma.d2 { background: radial-gradient(circle at 50% 0%, #fffbe6, #ffe38a); border-color: #c99700; }
+.diploma p { margin: 6px 0; font-size: 16px; }
+.dip-top { font-size: 20px; font-weight: 700; letter-spacing: 1px; color: #b35c00; }
+.dip-name { font-size: clamp(28px, 8vw, 40px); margin: 4px 0; color: #6b21a8; border-bottom: 3px dotted #e0a526; display: inline-block; padding: 0 12px; min-width: 60%; word-break: break-word; }
+.dip-avatar { margin: 18px 0 6px; }
+.dip-title { display: inline-block; margin: 8px 0; padding: 6px 18px; border-radius: 999px; background: #6b21a8; color: #fff; font-weight: 700; font-size: 18px; }
+.dip-foot { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-top: 10px; opacity: 0.8; gap: 8px; flex-wrap: wrap; }
+.dip-corner { position: absolute; font-size: 22px; color: #e0a526; }
+.dip-corner.tl { top: 4px; left: 8px; } .dip-corner.tr { top: 4px; right: 8px; }
+.dip-corner.bl { bottom: 2px; left: 8px; } .dip-corner.br { bottom: 2px; right: 8px; }
+
+@media print {
+  body::before, #sky, #confetti, #app, #toasts, .name-field, .no-print { display: none !important; }
+  body { background: #fff; }
+  .modal { position: static; background: none; padding: 0; }
+  .modal-card { box-shadow: none; max-height: none; overflow: visible; animation: none; }
+  .diploma { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
